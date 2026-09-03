@@ -3,6 +3,19 @@ import { X, Mail, Lock, User, Loader2 } from 'lucide-react';
 import { useAppContext } from '@/context/AppContext';
 import { ApiService, setAuthToken } from '@/services/api';
 
+type BackendUser = {
+  id: string | number;
+  full_name: string;
+  email: string;
+  demo_balance?: number | string | null;
+  created_at?: string | null;
+};
+
+type AuthResponseDetails = {
+  user?: BackendUser;
+  detail?: string;
+};
+
 export function AuthModal() {
   const {
     isAuthModalOpen,
@@ -20,7 +33,7 @@ export function AuthModal() {
 
   if (!isAuthModalOpen) return null;
 
-  const mapBackendUser = (backendUser: any) => ({
+  const mapBackendUser = (backendUser: BackendUser) => ({
     id: String(backendUser.id),
     name: backendUser.full_name,
     email: backendUser.email,
@@ -38,33 +51,35 @@ export function AuthModal() {
     try {
       if (authView === 'login') {
         const res = await ApiService.login(email, password);
+        const responseDetails = res as typeof res & AuthResponseDetails;
         if (res.success && res.access_token) {
           setAuthToken(res.access_token);
           // Both login & register now return user object directly
-          if ((res as any).user) {
-            setUser(mapBackendUser((res as any).user));
+          if (responseDetails.user) {
+            setUser(mapBackendUser(responseDetails.user));
           } else {
             // Fallback: fetch user separately
             const userData = await ApiService.getUser();
-            if (userData) setUser(mapBackendUser(userData));
+            if (userData) setUser(userData);
           }
           setIsAuthModalOpen(false);
         } else {
-          setError((res as any).detail || 'Login failed. Check your email and password.');
+          setError(responseDetails.detail || 'Login failed. Check your email and password.');
         }
       } else {
         const res = await ApiService.register(name, email, password);
+        const responseDetails = res as typeof res & AuthResponseDetails;
         if (res.success && res.access_token) {
           setAuthToken(res.access_token);
-          if ((res as any).user) {
-            setUser(mapBackendUser((res as any).user));
+          if (responseDetails.user) {
+            setUser(mapBackendUser(responseDetails.user));
           } else {
             const userData = await ApiService.getUser();
-            if (userData) setUser(mapBackendUser(userData));
+            if (userData) setUser(userData);
           }
           setIsAuthModalOpen(false);
         } else {
-          setError((res as any).detail || 'Registration failed. Email may already be in use.');
+          setError(responseDetails.detail || 'Registration failed. Email may already be in use.');
         }
       }
     } catch {

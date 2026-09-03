@@ -131,7 +131,7 @@ export const ApiService = {
     }
   },
 
-  async login(email: string, password: string): Promise<{success: boolean; access_token?: string; token_type?: string; user?: any; detail?: string}> {
+  async login(email: string, password: string): Promise<{success: boolean; access_token?: string; token_type?: string; user?: UserProfile; detail?: string}> {
     try {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
@@ -146,7 +146,7 @@ export const ApiService = {
     }
   },
 
-  async register(name: string, email: string, password: string): Promise<{success: boolean; access_token?: string; token_type?: string; user?: any; detail?: string}> {
+  async register(name: string, email: string, password: string): Promise<{success: boolean; access_token?: string; token_type?: string; user?: UserProfile; detail?: string}> {
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
