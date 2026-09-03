@@ -2,23 +2,24 @@
 
 import { useAppContext } from "@/context/AppContext";
 import { AdminDashboardPage } from "@/components/AdminDashboardPage";
+import { useRouter } from "next/navigation";
 
 export default function AdminPage() {
+  const router = useRouter();
   const { 
     matches, 
     orders, 
     analytics, 
-    handleUpdateOrderStatus, 
-    handleCashoutOrder 
+    handleUpdateOrderStatus 
   } = useAppContext();
 
   return (
     <AdminDashboardPage 
       matches={matches} 
       orders={orders} 
-      analytics={analytics || undefined}
+      analytics={analytics!}
       onUpdateOrderStatus={handleUpdateOrderStatus}
-      onProcessCashout={handleCashoutOrder}
+      onExitAdmin={() => router.back()}
     />
   );
 }
