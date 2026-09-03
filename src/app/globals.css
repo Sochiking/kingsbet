@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* =====================================================
+   KingsBet Design Tokens – Dark Mode (default)
+   ===================================================== */
+:root {
+  /* Backgrounds */
+  --kb-bg-base:     #0d1017;
+  --kb-bg-surface:  #12151a;
+  --kb-bg-card:     #171a21;
+  --kb-bg-elevated: #20252e;
+  --kb-bg-hover:    #282f3a;
+  --kb-bg-deep:     #11141a;
+  --kb-bg-locked:   #161a22;
+
+  /* Borders */
+  --kb-border:      #1e2533;
+  --kb-border-faint:#252d3a;
+
+  /* Text */
+  --kb-text-primary:   #f1f5f9;
+  --kb-text-secondary: #94a3b8;
+  --kb-text-muted:     #64748b;
+  --kb-text-placeholder: #475569;
+
+  /* Brand (unchanged in both modes) */
+  --kb-green:   #00b050;
+  --kb-green-d: #009443;
+  --kb-yellow:  #ffcc00;
+  --kb-red:     #e51c24;
+
+  /* Misc */
+  --background: #0d1017;
+  --foreground: #f1f5f9;
+}
+
+/* =====================================================
+   KingsBet Design Tokens – Light Mode overrides
+   ===================================================== */
+html.light {
+  /* Backgrounds */
+  --kb-bg-base:     #eef0f4;
+  --kb-bg-surface:  #ffffff;
+  --kb-bg-card:     #f5f6f8;
+  --kb-bg-elevated: #e8eaee;
+  --kb-bg-hover:    #dde1e7;
+  --kb-bg-deep:     #dfe2e8;
+  --kb-bg-locked:   #e4e6ea;
+
+  /* Borders */
+  --kb-border:      #c9cdd6;
+  --kb-border-faint:#d8dbe2;
+
+  /* Text */
+  --kb-text-primary:   #101828;
+  --kb-text-secondary: #475467;
+  --kb-text-muted:     #98a2b3;
+  --kb-text-placeholder: #b0b8c8;
+
+  /* Brand stays same */
+  --kb-green:   #008040;
+  --kb-green-d: #006d35;
+  --kb-yellow:  #c9a200;
+
+  /* Misc */
+  --background: #eef0f4;
+  --foreground: #101828;
+}
+
+/* =====================================================
+   Tailwind v4 custom utility registration
+   ===================================================== */
+@theme inline {
+  --color-background:     var(--background);
+  --color-foreground:     var(--foreground);
+  --font-sans:            var(--font-geist-sans);
+  --font-mono:            var(--font-geist-mono);
+
+  /* Background utilities  →  bg-kb-* */
+  --color-kb-base:        var(--kb-bg-base);
+  --color-kb-surface:     var(--kb-bg-surface);
+  --color-kb-card:        var(--kb-bg-card);
+  --color-kb-elevated:    var(--kb-bg-elevated);
+  --color-kb-hover:       var(--kb-bg-hover);
+  --color-kb-deep:        var(--kb-bg-deep);
+  --color-kb-locked:      var(--kb-bg-locked);
+
+  /* Border utilities  →  border-kb-* */
+  --color-kb-border:      var(--kb-border);
+  --color-kb-border-faint: var(--kb-border-faint);
+
+  /* Text utilities  →  text-kb-* */
+  --color-kb-primary:     var(--kb-text-primary);
+  --color-kb-secondary:   var(--kb-text-secondary);
+  --color-kb-muted:       var(--kb-text-muted);
+  --color-kb-placeholder: var(--kb-text-placeholder);
+
+  /* Brand utilities */
+  --color-kb-green:       var(--kb-green);
+  --color-kb-green-d:     var(--kb-green-d);
+  --color-kb-yellow:      var(--kb-yellow);
+  --color-kb-red:         var(--kb-red);
+}
+
+/* =====================================================
+   Base styles
+   ===================================================== */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Exclude transitions for animated elements */
+button:active, [data-no-transition] {
+  transition: none;
+}
+
+body {
+  background: var(--kb-bg-base);
+  color: var(--kb-text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Scrollbar theming */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--kb-bg-card); }
+::-webkit-scrollbar-thumb { background: var(--kb-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--kb-text-muted); }
