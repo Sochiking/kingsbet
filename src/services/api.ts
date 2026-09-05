@@ -12,6 +12,9 @@ import {
   INITIAL_ANALYTICS,
 } from '../data/mockData';
 
+
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8000';
+
 /**
  * Authentication token
  */
@@ -94,7 +97,7 @@ export const ApiService = {
    */
   async getMatches(): Promise<Match[]> {
     try {
-      const res = await fetch('/api/matches', {
+      const res = await fetch(`${API_BASE_URL}/api/matches`, {
         method: 'GET',
         headers: getHeaders(),
       });
